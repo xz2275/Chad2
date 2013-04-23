@@ -10,7 +10,7 @@ General Usage
 Installation Requirement
 ========================
 
-- An mobile device running Android 
+- A mobile device running Android 
 - A QR code scanner 
 
 Getting the App through QR code
