@@ -1,5 +1,5 @@
 rm(list = ls())
-setwd('/Users/Carol/Documents/Android')
+setwd('/Users/Carol/Documents/Android/Chad2/R')
 
 library(forecast)
 library(xts)
@@ -48,12 +48,12 @@ dev.off()
 
 # follow this book: http://www.statoek.wiso.uni-goettingen.de/veranstaltungen/zeitreihen/sommer03/ts_r_intro.pdf
 
-# regression analysis
 
-# exponential smoothing
 
 # ARIMA
 
 # diagonostic plots
+
+# forecast
  
 # stephold <- auto.arima(x = dif1data, max.p = 10, max.q = 10, d = 0, ic = "aicc", trace = TRUE, approximation = FALSE)
