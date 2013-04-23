@@ -1,757 +1,304 @@
-local = loess.as(CouponRate, BidPrice, criterion = "aicc", family = "symmetric", data=bonds)
-summary(local)
-local = loess.as(bonds$CouponRate, bonds$BidPrice, criterion = "aicc", family = "symmetric")
-summary(local)
-old = glm(BidPrice~CouponRate, data=bonds)
-par(mfrow=c(1,2))
-plot(x=fitted.values(old), y=resid(old), xlab="Fitted Values(Old)", ylab="Residuals(Old)")
-plot(x=fitted.values(local), y=resid(local), xlab="Fitted Values(New)", ylab="Residuals(New)")
-par(mfrow=c(1,2))
-plot(x=fitted.values(old), y=resid(old), xlab="Fitted Values(Old)", ylab="Residuals(Old)")
-plot(x=fitted.values(local), y=resid(local), xlab="Fitted Values(New)", ylab="Residuals(New)")
-old = glm(bonds$BidPrice ~ bonds$CouponRate)
-local = loess.as(bonds$CouponRate, bonds$BidPrice, criterion = "aicc", family = "symmetric")
-summary(local)
-old = glm(bonds$BidPrice ~ bonds$CouponRate)
-summary(old)
-par(mfrow=c(1,2))
-plot(x=fitted.values(old), y=resid(old), xlab="Fitted Values(Old)", ylab="Residuals(Old)")
-plot(x=fitted.values(local), y=resid(local), xlab="Fitted Values(New)", ylab="Residuals(New)")
-localpred = predict(local,se=T)
-alpha = 0.05
-spread = qnorm(1-alpha/2)*sqrt(localpred$residual.scale^2+localpred$se.fit^2)
-upper = localpred$fit + spread
-lower = localpred$fit - spread
-ind = which(local$x==8)
-lower[ind]
-upper[ind]
-model2
-ci.plot(model2)
-install.packages("HH")
-library(HH)
-ci.plot(model2)
-set.seed(2) ## simulate some data... #
-dat <- gamSim(1,n=400,dist="normal",scale=2)#
-b <- gam(y~s(x0)+s(x1)+s(x2)+s(x3),data=dat)
-summary(b)
-plot(b,pages=1,residuals=TRUE)  ## show partial residuals
-plot(b,pages=1,seWithMean=TRUE) ## `with intercept' CIs
-same fit in two parts .....#
-G <- gam(y~s(x0)+s(x1)+s(x2)+s(x3),fit=FALSE,data=dat)#
-b <- gam(G=G)#
-print(b)#
-## change the smoothness selection method to REML#
-b0 <- gam(y~s(x0)+s(x1)+s(x2)+s(x3),data=dat,method="REML")#
-plot(b0,pages=1,scheme=1)#
-## Would a smooth interaction of x0 and x1 be better?#
-## Use tensor product smooth of x0 and x1, basis #
-## dimension 49 (see ?te for details, also ?t2).#
-bt <- gam(y~te(x0,x1,k=7)+s(x2)+s(x3),data=dat,#
-          method="REML")#
-plot(bt,pages=1)
-plot(b0,pages=1,scheme=1)
-plot(bt,pages=1,scheme=2) ## alternative visualization
-op <- par(mfrow=c(2,2))#
-fn <- c("f0","f1","f2","f3");xn <- c("x0","x1","x2","x3")#
-for (k in 1:4) {#
-  plot(lr.fit,residuals=TRUE,select=k)#
-  ff <- dat[[fn[k]]];xx <- dat[[xn[k]]]#
-  ind <- sort.int(xx,index.return=TRUE)$ix#
-  lines(xx[ind],(ff-mean(ff))[ind]*.33,col=2)#
-}
-dat <- gamSim(1,n=400,dist="binary",scale=.33)#
-lr.fit <- gam(y~s(x0)+s(x1)+s(x2)+s(x3),family=binomial,#
-              data=dat,method="REML")#
-## plot model components with truth overlaid in red#
-op <- par(mfrow=c(2,2))#
-fn <- c("f0","f1","f2","f3");xn <- c("x0","x1","x2","x3")#
-for (k in 1:4) {#
-  plot(lr.fit,residuals=TRUE,select=k)#
-  ff <- dat[[fn[k]]];xx <- dat[[xn[k]]]#
-  ind <- sort.int(xx,index.return=TRUE)$ix#
-  lines(xx[ind],(ff-mean(ff))[ind]*.33,col=2)#
-}
-y<-runif(10)#
- err<-runif(10)#
- plotCI(1:10,y,err)
-install.packages("plottrix")
-install.packages("plotrix")
-y<-runif(10)#
- err<-runif(10)#
- plotCI(1:10,y,err)
-library(plotrix)
-y<-runif(10)#
- err<-runif(10)#
- plotCI(1:10,y,err)
-?plot.ci
-set.seed(1234)#
-mydat <- data.frame(#
-    won=as.factor(sample(c(0, 1), 250, replace=TRUE)), #
-    bid=runif(250, min=0, max=1000)#
-)
-mydat
-mod1 <- glm(won~bid, data=mydat, family=binomial(link="logit"))
-plotdat <- data.frame(bid=(0:1000))
-head(plotdat)
-preddat <- predict(mod1, newdata=plotdat, se.fit=TRUE)
-with(mydat, plot(bid, won, type="n", #
-    ylim=c(0, 1), ylab="Probability of winning", xlab="Bid"))
-with(preddat, lines(0:1000, exp(fit)/(1+exp(fit)), col="blue"))
-?with
-head(preddat)
-head(preddat$fit)
-with(preddat, lines(0:1000, exp(fit)/(1+exp(fit))+1.96*se.fit, lty=2))
-with(preddat, lines(0:1000, exp(fit)/(1+exp(fit))-1.96*se.fit, lty=2))
-A function to calculate log Returns#
+plot(tSeries)
+tui.1 <- filter(tSeries,filter=rep(1/5,5))
+tui.2 <- filter(tSeries,filter=rep(1/25,25))
+tui.3 <- filter(tSeries,filter=rep(1/81,81))
+lines(tui.1,col="red")
+lines(tui.2,col="purple")
+lines(tui.3,col="blue")
+tui.1 <- filter(as.numeric(tSeries),filter=rep(1/5,5))
+lines(tui.1,col="red")
+tui.1
+plot(tui.1)
+plot(as.numeric(tSeries)
+plot(as.numeric(tSeries))
+plot(as.numeric(tSeries))
+plot(as.numeric(tSeries), type="l")
+tui.1 <- filter(as.numeric(tSeries),filter=rep(1/5,5))
+lines(tui.1,col="red")
+tui.2 <- filter(tSeries,filter=rep(1/25,25))
+lines(tui.2,col="purple")
+tui.3 <- filter(tSeries,filter=rep(1/81,81))
+lines(tui.3,col="blue")
+plot(tSeries, type="l")
+tui.1 <- filter(as.numeric(tSeries),filter=rep(1/5,5))
+lines(tui.1,col="red")
+lines(tui.2,col="purple")
+tui.2 <- filter(tSeries,filter=rep(1/25,25))
+lines(tui.2,col="purple")
+lines(tui.3,col="blue")
+plot(as.numeric(tSeries), type="l")
+tui.1 <- filter(tSeries,filter=rep(1/5,5))
+tui.2 <- filter(tSeries,filter=rep(1/25,25))
+tui.3 <- filter(tSeries,filter=rep(1/81,81))
+lines(tui.1,col="red")
+lines(tui.2,col="purple")
+lines(tui.3,col="blue")
+title
+plot(tSeries)
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), ylab="Value")
+tui.1 <- filter(tSeries,filter=rep(1/5,5))
+tui.2 <- filter(tSeries,filter=rep(1/25,25))
+tui.3 <- filter(tSeries,filter=rep(1/81,81))
+lines(tui.1,col="red")
+lines(tui.2,col="purple")
+lines(tui.3,col="blue")
+t<-seq(1956,1995.2,length=length(beer))
+beer<-read.csv("C:/beer.csv",header=T,dec=",",sep=";")#
+beer<-ts(beer[,1],start=1956,freq=12)#
+plot(stl(log(beer),s.window="periodic"))
+beer<-read.csv("C:/beer.csv",header=T,dec=",",sep=";")
+beer<-read.csv("beer.csv",header=T,dec=",",sep=";")
+beer<-ts(beer[,1],start=1956,freq=12)#
+plot(stl(log(beer),s.window="periodic"))
+?stl
+plot(stl(tSeries))
+plot(stl(as.numeric(tSeries)))
+log(beer)
+t<-seq(1956,1995.2,length=length(beer))
+t
+beer
+index = findText(text, "Range:")
+begin = text[index+1]
+begin
+text[1:50]
+end = text[index+3]
+end
+strsplit(begin, "-")[[1]][2]
+byy = strsplit(begin, "-")[[1]][1]
+bmm = strsplit(begin, "-")[[1]][2]
+bdd = strsplit(begin, "-")[[1]][3]
+eyy = strsplit(end, "-")[[1]][1]
+emm = strsplit(end, "-")[[1]][2]
+edd = strsplit(end, "-")[[1]][3]
+byy = as.numeric(strsplit(begin, "-")[[1]][1])
+byy
+eyy = as.numeric(strsplit(end, "-")[[1]][1])
+emm = as.numeric(strsplit(end, "-")[[1]][2])
+edd = as.numeric(strsplit(end, "-")[[1]][3])
+eyy
+byy.bmm.bdd
+byy.bmm
+byy = as.numeric(strsplit(begin, "-")[[1]][1])
+bmm = as.numeric(strsplit(begin, "-")[[1]][2])
+bdd = as.numeric(strsplit(begin, "-")[[1]][3])
+byy.bmm
+bmm
+from_date = byy + bmm/10
+to_date = eyy + emm/10
+from_date
+to_date
+length(tSeries)
+t<-seq(from_date,to_date,length=length(tSeries))
+lseries = log(tSeries)
+t<-seq(from_date,to_date,length=length(lseries))
+t2<-t^2
+plot(lseries)
+lm(lseries ~ t + t2)
+lines(lm(lseries~t+t2)$fit,col=2,lwd=2)
+par(mfrow=c(2,1))
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), ylab="Value")
+tui.1 <- filter(tSeries,filter=rep(1/5,5))
+tui.2 <- filter(tSeries,filter=rep(1/25,25))
+tui.3 <- filter(tSeries,filter=rep(1/81,81))
+lines(tui.1,col="red")
+lines(tui.2,col="purple")
+lines(tui.3,col="blue")
+plot(lseries, main="Performing Regression Analysis")
+lm(lseries ~ t + t2)
+lines(lm(lseries~t+t2)$fit,col=2,lwd=2)
+par(mfrow=c(2,1))
+?plot
+par(mfrow=c(2,1))
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab=NULL, ylab="Value", xaxt="n")
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+par(mfrow=c(2,1))
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+tui.1 <- filter(tSeries,filter=rep(1/5,5))
+tui.2 <- filter(tSeries,filter=rep(1/25,25))
+tui.3 <- filter(tSeries,filter=rep(1/81,81))
+lines(tui.1,col="red")
+lines(tui.2,col="purple")
+lines(tui.3,col="blue")
+index = findText(text, "Range:")
+begin = text[index+1]
+end = text[index+3]
+byy = as.numeric(strsplit(begin, "-")[[1]][1])
+bmm = as.numeric(strsplit(begin, "-")[[1]][2])
+bdd = as.numeric(strsplit(begin, "-")[[1]][3])
+eyy = as.numeric(strsplit(end, "-")[[1]][1])
+emm = as.numeric(strsplit(end, "-")[[1]][2])
+edd = as.numeric(strsplit(end, "-")[[1]][3])
+from_date = byy + bmm/10
+to_date = eyy + emm/10
+lseries = log(tSeries)
+t<-seq(from_date,to_date,length=length(lseries))
+t2<-t^2
+plot(lseries, main="Performing Regression Analysis")
+lm(lseries ~ t + t2)
+lines(lm(lseries~t+t2)$fit,col=2,lwd=2)
+lseries = tSeries
+t<-seq(from_date,to_date,length=length(lseries))
+t2<-t^2
+plot(lseries, main="Performing Regression Analysis")
+lm(lseries ~ t + t2)
+lines(lm(lseries~t+t2)$fit,col=2,lwd=2)
+par(mfrow=c(2,1))#
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")#
+tui.1 <- filter(tSeries,filter=rep(1/5,5))#
+tui.2 <- filter(tSeries,filter=rep(1/25,25))#
+tui.3 <- filter(tSeries,filter=rep(1/81,81))#
+lines(tui.1,col="red")#
+lines(tui.2,col="purple")#
+lines(tui.3,col="blue")#
 #
-logReturns = function(x){#
-	n = length(x)#
-	return(log(x[2:n]) - log(x[1:(n-1)]))#
-}#
+# -- [ Regression Analysis ] --#
+# ==============================#
+index = findText(text, "Range:")#
+begin = text[index+1]#
+end = text[index+3]#
+byy = as.numeric(strsplit(begin, "-")[[1]][1])#
+bmm = as.numeric(strsplit(begin, "-")[[1]][2])#
+bdd = as.numeric(strsplit(begin, "-")[[1]][3])#
+eyy = as.numeric(strsplit(end, "-")[[1]][1])#
+emm = as.numeric(strsplit(end, "-")[[1]][2])#
+edd = as.numeric(strsplit(end, "-")[[1]][3])#
+from_date = byy + bmm/10 #
+to_date = eyy + emm/10#
 #
-# Read in the list of ticker symbols#
+lseries = tSeries#
+t<-seq(from_date,to_date,length=length(lseries))#
+t2<-t^2#
+plot(lseries, main="Performing Regression Analysis")#
+lm(lseries ~ t + t2)#
+lines(lm(lseries~t+t2)$fit,col=2,lwd=2)
+plot(lseries, ylab="Value", main="Performing Regression Analysis")
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,100,25)), col="lightgray", lty="dotted")
+v
+length(lseries)
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,length(lseries),25)), col="lightgray", lty="dotted")
+plot(lseries, ylab="Value", main="Performing Regression Analysis")
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,length(lseries),50)), col="lightgray", lty="dotted")
+lm(lseries ~ t + t2)
+plot(lseries, ylab="Value", main="Performing Regression Analysis")
+?abline
+abline(v=(seq(0,length(lseries),50)), col="lightgray", lty="dotted")
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,length(lseries),50)), col="lightgray", lwd=2, lty="dotted")
+figure(2)
+par(mfrow=c(2,1))
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+par(mfrow=c(2,1))
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,length(lseries),50)), col="lightgray", lwd=2, lty="dotted")
+plot(lseries, ylab="Value", main="Performing Regression Analysis")
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,length(lseries),50)), col="gray", lwd=2, lty=4)
+abline(h=(seq(0,length(lseries),50)), col="gray", lwd=2, lty=4)
+abline(h=(seq(0,length(lseries),100)), col="gray", lwd=2, lty=4)
+abline(v=(seq(0,length(lseries),50)), col="gray", lwd=2, lty=4)
+abline(v=(seq(0,length(lseries),50)), col="gray", lwd=2, lty=4)
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,length(lseries),50)), col="gray", lwd=2, lty=4)
+abline(h=(seq(0,length(lseries),100)), col="gray", lwd=2, lty=4)
+abline(h=(seq(0,100,20)), col="gray", lwd=2, lty=4)
+abline(h=(seq(0,100,5)), col="gray", lwd=2, lty=4)
+abline(h=(seq(0,100,10)), col="gray", lwd=2, lty=4)
+plot(lseries, ylab="Value", main="Performing Regression Analysis")
+par(mfrow=c(2,1))
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,length(lseries),50)), col="gray", lwd=1, lty=4)
+abline(h=(seq(0,100,20)), col="gray", lwd=2, lty=4)
+plot(lseries, ylab="Value", main="Performing Regression Analysis")
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+par(mfrow=c(2,1))
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,length(lseries),50)), col="lightgray", lwd=1, lty=4)
+abline(h=(seq(0,100,20)), col="lightgray", lwd=1, lty=4)
+lm(lseries ~ t + t2)
+plot(lseries, ylab="Value", main="Performing Regression Analysis")
+par(mfrow=c(2,1))
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")
+abline(v=(seq(0,length(lseries),60)), col="lightgray", lwd=1, lty=4)
+abline(h=(seq(0,100,20)), col="lightgray", lwd=1, lty=4)
+plot(lseries, ylab="Value", main="Performing Regression Analysis")
+png('plot2.png')#
+par(mfrow=c(2,1))#
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")#
+abline(v=(seq(0,length(lseries),60)), col="lightgray", lwd=1, lty=4)#
+abline(h=(seq(0,100,20)), col="lightgray", lwd=1, lty=4)#
+tui.1 <- filter(tSeries,filter=rep(1/5,5))#
+tui.2 <- filter(tSeries,filter=rep(1/25,25))#
+tui.3 <- filter(tSeries,filter=rep(1/81,81))#
+lines(tui.1,col="red")#
+lines(tui.2,col="purple")#
+lines(tui.3,col="blue")#
 #
-SymbolList = read.table("http://www.stat.cmu.edu/~cschafer/MSCF/Project/ChallengeSymbols.txt")#
+# -- [ Regression Analysis ] --#
+# ==============================#
+index = findText(text, "Range:")#
+begin = text[index+1]#
+end = text[index+3]#
+byy = as.numeric(strsplit(begin, "-")[[1]][1])#
+bmm = as.numeric(strsplit(begin, "-")[[1]][2])#
+bdd = as.numeric(strsplit(begin, "-")[[1]][3])#
+eyy = as.numeric(strsplit(end, "-")[[1]][1])#
+emm = as.numeric(strsplit(end, "-")[[1]][2])#
+edd = as.numeric(strsplit(end, "-")[[1]][3])#
+from_date = byy + bmm/10 #
+to_date = eyy + emm/10#
 #
-# number of days that will be predicted#
-#
-d = 20#
-#
-# Load up quantmod and read in the data#
-#
-library(quantmod)#
-l = length(SymbolList$V1)#
-#
-# Loop through the symbols and get data from past 2 months#
-#
-firstMonthVol = numeric(l)#
-secondMonthVol = numeric(l)#
-firstMonthPriceDiff = numeric(l)#
-secondMonthPriceDiff = numeric(l)#
-firstMonthVolume = numeric(l)#
-secondMonthVolume = numeric(l)#
-firstMonthPriceDiff2 = numeric(l)#
-secondMonthPriceDiff2 = numeric(l)#
-#
-for (i in 1:l){#
-	data = getSymbols(as.character(SymbolList$V1[i]), from = (Sys.Date()-62), to = Sys.Date(), auto.assign=F)#
-	firstMonthVol[i] = sqrt(mean(logReturns(as.numeric(data[1:21,6]))^2))#
-	secondMonthVol[i] = sqrt(mean(logReturns(as.numeric(data[21:41,6]))^2))#
-	firstMonthPriceDiff[i] = mean(abs(as.numeric(data[1:21,2]-data[1:21,3])))#
-	secondMonthPriceDiff[i] = mean(abs(as.numeric(data[21:41,2]-data[21:41,3])))#
-	firstMonthPriceDiff2[i] = mean(abs(as.numeric(data[1:21,1]-data[1:21,4])))#
-	secondMonthPriceDiff2[i] = mean(abs(as.numeric(data[21:41,1]-data[21:41,4])))#
-	firstMonthVolume[i] = mean(as.numeric(data[1:21,5]))#
-	secondMonthVolume[i] = mean(as.numeric(data[21:41,5]))#
-#
-}#
-# plot the data#
-#
-plot(y=secondMonthVol, x=firstMonthVol)#
-plot(y=secondMonthVol, x=firstMonthPriceDiff)#
-plot(y=secondMonthVol, x=firstMonthVolume)#
-#
-# log transformation#
-#
-logFirstMonthVol = log10(firstMonthVol)#
-logSecondMonthVol = log10(secondMonthVol)#
-logFirstMonthPriceDiff = log10(firstMonthPriceDiff)#
-logSecondMonthPriceDiff = log10(secondMonthPriceDiff)#
-logFirstMonthVolume = log10(firstMonthVolume)#
-logSecondMonthVolume = log10(secondMonthVolume)#
-logFirstMonthPriceDiff2 = log10(firstMonthPriceDiff2)#
-logSecondMonthPriceDiff2 = log10(secondMonthPriceDiff2)#
-#
-# plot the logged values#
-plot(y=logSecondMonthVol, x=logFirstMonthVol)#
-plot(y=logSecondMonthVol, x=logFirstMonthPriceDiff)#
-plot(y=logSecondMonthVol, x=logFirstMonthPriceDiff2)#
-plot(y=logSecondMonthVol, x=logFirstMonthVolume)#
-#
-# creating interaction variables#
-inter1 = logFirstMonthVol*logFirstMonthPriceDiff#
-inter2 = logFirstMonthVol*logFirstMonthPriceDiff2#
-inter3 = logFirstMonthVol*logFirstMonthVolume#
-inter4 = logFirstMonthPriceDiff*logFirstMonthPriceDiff2#
-inter5 = logFirstMonthPriceDiff*logFirstMonthVolume#
-inter6 = logFirstMonthPriceDiff2*logFirstMonthVolume#
-inter7 = logFirstMonthVol*logFirstMonthPriceDiff*logFirstMonthPriceDiff2#
-inter8 = logFirstMonthVol*logFirstMonthPriceDiff2*logFirstMonthVolume#
-inter9 = logFirstMonthPriceDiff*logFirstMonthPriceDiff2*logFirstMonthVolume#
-inter10 = logFirstMonthVol*logFirstMonthPriceDiff*logFirstMonthVolume#
-inter11 = logFirstMonthPriceDiff*logFirstMonthPriceDiff2*logFirstMonthVolume*logFirstMonthVol#
-#
-# interactive model#
-linregress = glm(logSecondMonthVol~logFirstMonthPriceDiff*logFirstMonthPriceDiff2*logFirstMonthVolume*logFirstMonthVol)#
-#linregress = glm(logSecondMonthVol~logFirstMonthPriceDiff+logFirstMonthPriceDiff2+logFirstMonthVolume+logFirstMonthVol+inter1+inter2+inter3+inter4+inter5+inter6+inter7+inter8+inter9+inter10+inter11)#
-#
-linregress#
-summary(linregress)#
-slinregress = step(linregress)#
-summary(slinregress)#
-#
-# diagonostic plots (with Cook's distance)#
-library(graphics)#
-par(mfrow = c(2, 2), oma = c(0, 0, 2, 0))#
-plot(linregress)
-require(fCalendar)#
-require(fImport)#
-#
-## workaround for R 2.1.1:#
-#
-Sys.timezone <- function ()#
-as.vector(Sys.getenv("TZ"))#
-#
-yahoo.getOption <- function(ticker="QQQQ",maturity="2005-12",file="tempfile01",method="internal",get.short.rate=TRUE) {#
-##################################################################################################
-## get quotes for stock options from Yahoo ####
-##################################################################################################
-## ticker   .. Ticker symbol for underlying stock#
-## maturity .. maturity date of option in format YYYY-MM#
-## file     .. name of temporary file used to store data#
-## method   .. used by 'download.file'#
-##################################################################################################
-#
-        source <- "http://finance.yahoo.com/q/op?"#
-        url <- paste(source,"s=",ticker,"&m=",maturity,sep="")#
-        download.file(url = url, destfile = file, method = method)#
-        raw <- scan(file,what="character",sep=">",quote="");#
-        ## throw away file#
-        unlink(file)#
-#
-        start <- grep("<body",raw)#
-        raw <- raw[start:length(raw)]#
-        table.starts <- grep("<table",raw)#
-        table.ends <- grep("</table",raw)#
-        heads <- grep("<td.*yfnc_tablehead.*",raw)#
-        subtit <- grep("<table.*yfncsubtit",raw)#
-        expire <- grep("Expire at close",raw)#
-        if(!all(length(heads) == 16,length(subtit) == 1,length(expire) == 2)) stop("Unexpected data format")#
-        info.range <- c(subtit,min(table.ends[table.ends > subtit]))#
-        call.range <- c(heads[8]+2, min(table.ends[table.ends > heads[8]]))#
-        put.range <- c(heads[16]+2, min(table.ends[table.ends > heads[16]]))#
-        info.raw <- raw[info.range[1]:info.range[2]]#
-        call.raw <- raw[call.range[1]:call.range[2]]#
-        put.raw <- raw[put.range[1]:put.range[2]]#
-        b.pos <- grep("<b$",info.raw)#
-        sm.pos <- grep("<small$",info.raw)#
-        stock.name <- gsub("</b","",info.raw[b.pos[1]+1])#
-        Stock.price <- as.double(gsub("</span","",info.raw[b.pos[2]+2]))#
-        Quote.date <- gsub("On |:","",info.raw[sm.pos[1]+1])#
-        Strike.date <- gsub("Expire at close *|</td","",raw[expire[1]]) #
-        strike.timeDate <- timeDate(strptime(Strike.date,format="%a, %b %d, %Y"), zone="NewYork")#
-        # Quote.date.timeDate <- timeDate(Quote.date,format="%b %d", FinCenter="NewYork")#
-        Quote.date.timeDate <- timeDate(strptime(date(),format="%a %b %d %H:%M:%S %Y"))#
-        TTM <- ceiling(as.double(difftime(strike.timeDate,Quote.date.timeDate,units="day")))#
-        ## remove HTML junk and commas#
-        call.raw <- gsub("<.*$|,","",call.raw)#
-        put.raw <- gsub("<.*$|,","",put.raw)#
-        ## discard blank and empty elements#
-        call.raw <- call.raw[-grep("[[:blank:]]|^$",call.raw)]#
-        put.raw <- put.raw[-grep("[[:blank:]]|^$",put.raw)]#
-        ## reshape to matrix#
-        call.mat <- matrix(call.raw,ncol=8,byrow=TRUE)#
-        put.mat <- matrix(put.raw,ncol=8,byrow=TRUE)#
-        if(nrow(call.mat) == 0 || nrow(put.mat) == 0) {#
-            warning(paste("No data available for ticker",ticker,", maturity", maturity))#
-            return(NULL)#
-        }#
-        tc <- function(x) type.convert(x,na.string=c("N/A",""))#
-        ## convert types, make data frames#
-        call.df <- data.frame(Strike = tc(call.mat[-1,1]), Symbol = tc(call.mat[-1,2]), Last = tc(call.mat[-1,3]), Chg = tc(call.mat[-1,4]),#
-                                Bid = tc(call.mat[-1,5]), Ask = tc(call.mat[-1,6]), Vol = tc(call.mat[-1,7]), Open.Int = tc(call.mat[-1,8]))#
-#
-        put.df <- data.frame(Strike = tc(put.mat[-1,1]), Symbol = tc(put.mat[-1,2]), Last = tc(put.mat[-1,3]), Chg = tc(put.mat[-1,4]),#
-                                Bid = tc(put.mat[-1,5]), Ask = tc(put.mat[-1,6]), Vol = tc(put.mat[-1,7]), Open.Int = tc(put.mat[-1,8]))#
-        if(get.short.rate) {#
-            Short.rate <- get.short.rate(TTM)       #
-        } else {#
-            Short.rate <- NA#
-        }#
-        return(list(call=call.df,put=put.df,Stock.ticker=ticker,Quote.date=Quote.date.timeDate,Strike.date=strike.timeDate,#
-        Stock.name=stock.name,Stock.price=Stock.price,TTM=TTM,Short.rate=Short.rate))#
-}#
-get.short.rate <- function(TTM) {#
-################################################################
-## get constant maturity short rate for maturity = TTM (in days)#
-#################################################################
-## uses crude piecewise linear interpolation#
-## TTM ... vector of maturities in days#
-####################################################
-#
-   cmr1m <- fredImport("DGS1MO")  # 1-Month Treasury constant maturity rate#
-   cmr1y <- fredImport("DGS1")  # 1-Year Treasury constant maturity rate#
-   cmr2y <- fredImport("DGS2")  # 2-Year Treasury constant maturity rate#
-#
-    r1m <- cmr1m@data[dim(cmr1m@data)[1],"DGS1MO"]#
-    r1y <- cmr1y@data[dim(cmr1y@data)[1],"DGS1"]#
-    r2y <- cmr2y@data[dim(cmr2y@data)[1],"DGS2"]#
-#
-    helper <- function(TTM) {#
-       if(TTM <= 360) {#
-         b <- (12 * r1m - r1y)/11#
-         a <- (r1y - r1m)/330#
-       } else {#
-         b <- 2 * r1y - r2y#
-         a <- (r2y - r1y)/360#
-       }#
-       return(a*TTM + b)#
-    }#
-    return(sapply(TTM,helper))#
-}#
-#
-yahoo.getMaturities <- function(ticker="QQQQ",file="tempfile01",method="internal") {#
-##################################################################################################
-## get maturities for which option quotes are available from Yahoo ####
-##################################################################################################
-## ticker   .. Ticker symbol for underlying stock#
-## file     .. name of temporary file used to store data#
-## method   .. used by 'download.file'#
-##################################################################################################
-        source <- "http://finance.yahoo.com/q/op?"#
-        url <- paste(source,"s=",ticker,sep="")#
-        download.file(url = url, destfile = file, method = method)#
-        raw <- scan(file,what="character",sep=">",quote="");#
-        ## throw away file#
-        unlink(file)#
-#
-        start <- grep("<body",raw)#
-        raw <- raw[start:length(raw)]#
-        expire <- grep("View By Expiration",raw)#
-        table.starts <- grep("<table",raw)#
-        if(!length(expire) == 1) stop("Unexpected data format")#
-        expire.range <- c(expire,min(table.starts[table.starts > expire]))#
-        expire.raw <- raw[expire.range[1]:expire.range[2]]#
-          ## remove HTML junk and commas#
-        expire.raw <- gsub("<.*$|,","",expire.raw)#
-        pattern <- "(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) [[:digit:]]+.*"#
-        expire.index <- grep(pattern,expire.raw)#
-        expire.raw <- expire.raw[expire.index]#
-            ## insert century "20"  (05 -> 2005, etc..)#
-        conv <- function(x) {#
-            xs <- unlist(strsplit(x," "))#
-            num <- match(xs[1],c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"))#
-            return(paste("20",xs[2],"-",sprintf("%02i",num),sep=""))#
-        }#
-        return(sapply(expire.raw,conv))#
-}#
-combine.data <- function(x) {#
-########################################################################
-## Reformat object returned by 'yahoo.getOption' to a single data frame#
-########################################################################
-#
-      dfrm <- rbind(data.frame(x$call,Type="call"),data.frame(x$put,Type="put"))#
-      #dfrm <- dfrm[,!(colnames(dfrm) %in% c("Bid","Ask","Chg"))]#
-      dfrm$Quote.date <- format(x$Quote.date,"%Y-%m-%d")#
-      dfrm$Strike.date <- format(x$Strike.date,"%Y-%m-%d")#
-      dfrm$Underlying <- x$Stock.ticker#
-      dfrm$Stock.price <- x$Stock.price#
-      dfrm$TTM <- x$TTM#
-      dfrm$Short.rate <- x$Short.rate#
-      dfrm$Moneyness.fw <- dfrm$Strike*exp(-dfrm$Short.rate/100*dfrm$TTM/365)/dfrm$Stock.price#
-      rownames(dfrm) <- 1:dim(dfrm)[1]#
-      return(dfrm)#
-#
-}#
-yahoo.getAllOptions <- function(tickers=c("QQQQ"),File=NULL,imp.vol=TRUE) {#
-###############################################################################################
-## Combines 'yahoo.getOption', 'yahoo.getMaturities' and 'combine.data':#
-## Downloads option quotes for all available maturities and stores them in a single data frame#
-###############################################################################################
-## tickers  .. vector of ticker symbols for which to get quotes#
-## File .. if not NULL store data frame to a file#
-## imp.vol .. if true implied Black-Scholes volatilities are calculated and added to the data frame#
-###############################################################################################
-    df.total <- data.frame()#
-    for(i in 1:length(tickers)) {#
-        ticker <- tickers[i]#
-        mat <- yahoo.getMaturities(ticker)#
-        if(length(mat) < 1) stop(paste("Cannot Continue: No valid maturities found for ticker",ticker))#
-        short.rate <- get.short.rate(1:1000)  #
-        for(j in 1:length(mat)) {#
-            fresh <- yahoo.getOption(ticker=ticker,maturity=mat[j],get.short.rate=FALSE)#
-            fresh$Short.rate <- short.rate[fresh$TTM]#
-            if(!is.null(fresh))#
-                df.total <- rbind(df.total,combine.data(fresh))#
-        }#
-    }#
-    if(imp.vol) df.total$Imp.vol <- imp.vol(df.total)       ## add implied volatilities#
-#
-    if(!is.null(File)) {#
-        write.table(df.total,File,append=TRUE,row.names=FALSE,col.names=FALSE)#
-        return(NULL)#
-    }#
-    return(df.total)#
-#
-}#
-plot.smile <- function(x,type="call",scale="strike",normed=TRUE) {#
-#################################################################################################
-##  Plot smiles (Implied Volatility vs. Strike) for each Time-to-maturity (TTM) thats available.#
-#################################################################################################
-##  x .. data frame as returned by 'yahoo.getAllOptions'#
-##  type  .. call/put#
-##  scale .. One of "strike", "moneyness" (= exp(-r*TTM)*Strike/Stock_price), "logmoneyness"#
-##  normed .. TRUE -> same scaling for all plots#
-#################################################################################################
-#
-    x <- x[(x$Type == type) & !is.na(x$Imp.vol),]#
-    TTM.level <- unique(x$TTM)#
-    limits <- NULL#
-    if(normed && scale=="strike") limits <- list(xlim=range(x$Strike),ylim=range(x$Imp.vol,na.rm=TRUE))#
-    if(normed && scale=="moneyness") limits <- list(xlim=range(x$Moneyness.fw),ylim=range(x$Imp.vol,na.rm=TRUE))#
-    if(normed && scale=="logmoneyness") limits <- list(xlim=range(log(x$Moneyness.fw)),ylim=range(x$Imp.vol,na.rm=TRUE))#
-#
-    single.plot <- function(x,scale="strike",limits=NULL) {#
-        if(scale == "strike") xx <- x$Strike#
-        if(scale == "moneyness") xx <- x$Moneyness.fw#
-        if(scale == "logmoneyness") xx <- log(x$Moneyness.fw)#
-        if(is.null(limits)) limits <- list(xlim=range(xx),ylim=range(x$Imp.vol,na.rm=TRUE))#
-        ylow <- limits$ylim[1] - (limits$ylim[2]-limits$ylim[1])*.1#
-        #browser()#
-        plot(xx,x$Imp.vol,type="b",xlab=scale,ylab="Implied Volatility",ylim=c(ylow,limits$ylim[2]),xlim=limits$xlim)#
-        loess.fit <- loess(x$Imp.vol ~ xx,weights=sqrt(x$Vol))#
-        k.seq <- seq(from=min(xx),to=max(xx),length=200)#
-        lines(k.seq,predict(loess.fit,k.seq),col=2,lty="dotted")#
-        if(scale == "strike") abline(v=x$Stock.price,col=3,lty="dashed")#
-        if(scale == "moneyness") abline(v=1,col=3,lty="dashed")#
-        if(scale == "logmoneyness") abline(v=0,col=3,lty="dashed")#
-        mtext(paste("TTM:", x$TTM, "(days)"),line=.5)#
-#
-        volume.scaled <- x$Vol/max(x$Vol,na.rm=TRUE)*(limits$ylim[2] - ylow)*.25 + ylow#
-        segments(xx,ylow,xx,volume.scaled,col=4,lwd=2)#
-        #mtext("volume",4,adj=.1,col=4,srt=90)#
-        text(min(xx),ylow + (limits$ylim[2] - ylow)*.025,"volume",srt=90,col=4,pos=4)#
-        # axis(4,at=range(volume.scaled,na.rm=TRUE),labels=c(0,max(x$volume,na.rm=TRUE)),cex=.7,col=4)#
-    }#
-    nx <- floor(sqrt(length(TTM.level)))#
-    ny <- ceiling(length(TTM.level)/nx)#
-    old.par <- par(mfrow=c(nx,ny))#
-    by(x,x$TTM,single.plot,scale=scale,limits=limits)    #
-    par(old.par)#
-    #browser()#
-}#
-plot3d.smile <- function(opt.all,type="call",strike.range=c(-Inf,Inf),TTM.range=c(-Inf,Inf),strike.scale="Strike",TTM.scale="TTM",plot.type="persp",n=60,fit.diagnostics=FALSE) {#
-#######################################################################################################
-##  Plot 3d smiles (Volatility Surface consisting of Implied Volatility vs. Strike + Time-to-maturity#
-#######################################################################################################
-##  opt.all .. data frame as returned by 'yahoo.getAllOptions' or 'combine.data'#
-##  type         .. call/put#
-##  strike.range .. vector of length 2;  c(20,50) means include all options with strike prices between 20 and 50#
-##  strike.range .. vector of length 2; c(10,100) means include all options with time-to-maturity between 10 and 100 days#
-##  strike.scale .. One of "Strike", "Moneyness" (= exp(-r*TTM)*Strike/Stock_price), "Log-Moneyness"#
-##  TTM.scale    .. One of "TTM","Log-TTM" #
-##  plot.type    .. One of "persp", "lattice"; two different types of plots#
-##  n            .. density of grid, applies both for strike and TTM grid#
-##  fit.diagnostics .. if TRUE plot diagnostics for the smoothing used#
-#################################################################################################
-      if(!require(locfit)) stop("Cannot load package 'locfit'")#
-#
-      # select valid data#
-      is.valid <- opt.all$Type == type & opt.all$TTM >= TTM.range[1] & opt.all$TTM <= TTM.range[2] & opt.all$Strike >= strike.range[1] & opt.all$Strike <= strike.range[2] & !is.na(opt.all$Imp.vol)#
-      if(!any(is.valid)) stop("No data point inside the specified range")#
-      opt.use <- opt.all[is.valid,]#
-#
-      # transform scales#
-      if(TTM.scale == "Log-TTM") {#
-          opt.use$TTM.tf <- log(opt.use$TTM)#
-      } else {#
-         opt.use$TTM.tf <- opt.use$TTM#
-      }#
-#
-      if(strike.scale == "Moneyness") {#
-          opt.use$strike.tf <- opt.use$Moneyness.fw#
-      } #
-#
-      if(strike.scale == "Log-Moneyness") {#
-          opt.use$strike.tf <- log(opt.use$Moneyness.fw)#
-      }#
-#
-      if(strike.scale == "Strike") {#
-         opt.use$strike.tf <- opt.use$Strike#
-      }#
-      # calculate smooth surface#
-      opt.fit <- locfit(Imp.vol ~ strike.tf + TTM.tf, data = opt.use, alpha=.7,deg=2) # ,weights=sqrt(opt.call$Vol))#
-#
-      if(fit.diagnostics) {#
-          old.par <- par(mfrow=c(2,2))#
-          res <- residuals(opt.fit,data=opt.use)#
-          qqnorm(res)#
-          plot(opt.use[,"strike.tf"],res)#
-          plot(opt.use[,"TTM.tf"],res)#
-          plot.new()#
-          par(old.par)#
-          windows()#
-      }#
-      strike.range <- range(opt.use$strike.tf)#
-      TTM.range <- range(opt.use$TTM.tf)#
-#
-      strike.grid <- seq(from=strike.range[1],to=strike.range[2],length=n)#
-      TTM.grid <- seq(from=TTM.range[1],to=TTM.range[2],length=n)#
-      full.grid <- expand.grid(strike.tf=strike.grid,TTM.tf=TTM.grid)#
-#
-      opt.pred <- predict(opt.fit,full.grid)#
-      if(plot.type ==  "persp") {#
-          persp(x=strike.grid,y=TTM.grid,z=matrix(opt.pred,nrow=n),xlab=strike.scale,ylab=TTM.scale,zlab="Implied Volatility",main="Volatility Smile",#
-                expand=.6,shade=TRUE,col=2,phi=20,theta=30,ticktype="detailed")#
-      }#
-#
-      if(plot.type == "lattice") {#
-#
-          if(!require(lattice)) stop("Cannot load package 'lattice'")#
-          aspect <- list(z=-35,x=-70,y=0)#
-#
-          plot1 <- cloud(Imp.vol ~ strike.tf + TTM.tf, data = opt.use,screen=aspect,cross=TRUE,col=1,#
-                      scales=list(arrows=FALSE),xlab=strike.scale,ylab=TTM.scale,zlab="Volatility",main="Implied Volatility: Raw Data")#
-          plot2 <- wireframe(opt.pred ~ full.grid$strike.tf + full.grid$TTM.tf, shade=TRUE,pretty=TRUE,screen=aspect,#
-                      scales=list(arrows=FALSE),xlab=strike.scale,ylab=TTM.scale,zlab="Volatility",main="Implied Volatility: Smooth Interpolation")#
-#
-          print(plot1, split=c(1,1,2,1),more=TRUE)#
-          print(plot2, split=c(2,1,2,1))#
-      }#
-#
-}#
-#### Misc. functions#
-pc.parity <- function(x,rate=NA) {#
-## check put-call parity#
-#
-    if(is.na(rate)) rate <- x$Short.rate/100#
-#
-    common <- intersect(x$put$Strike,x$call$Strike)#
-    cmp <- x$call[match(common,x$call$Strike),"Last"] - x$put[match(common,x$put$Strike),"Last"] - x$Stock.price + exp(-rate*x$TTM)*common#
-    return(list(Strike = common,cpp.res = cmp))#
-#
-}#
-bs.call <- function(volatility,strike.price,Stock.price,TTM,rate) {#
-## returns Black-Scholes European call option price. Time unit for rate, TTM and volatility is YEARS !! #
-#
-return(Stock.price*pnorm((log(Stock.price/strike.price) + (rate + volatility^2/2)*TTM)/(volatility*sqrt(TTM))) - #
-      strike.price*pnorm((log(Stock.price/strike.price) + (rate - volatility^2/2)*TTM)/(volatility*sqrt(TTM))) * exp(-TTM*rate))#
-#
-}#
-#
-bs.put <- function(volatility,strike.price,Stock.price,TTM,rate) {#
-## returns Black-Scholes European call option price. Time unit for rate, TTM and volatility is YEARS !! #
-#
-return(strike.price*pnorm(-(log(Stock.price/strike.price) + (rate - volatility^2/2)*TTM)/(volatility*sqrt(TTM)))*exp(-TTM*rate) -#
-        Stock.price*pnorm(-(log(Stock.price/strike.price) + (rate + volatility^2/2)*TTM)/(volatility*sqrt(TTM))))#
-}#
-imp.vol <- function(x,upper=10) {#
-#
-    bs.res <- function(vol,row) {#
-        ret <- NA#
-        if(row$Type == "call")#
-            ret <- bs.call(vol,strike.price=row$Strike,Stock.price=row$Stock.price,TTM=row$TTM/365,rate=row$Short.rate/100) - row$Last#
-        if(row$Type == "put")#
-            ret <-  bs.put(vol,strike.price=row$Strike,Stock.price=row$Stock.price,TTM=row$TTM/365,rate=row$Short.rate/100) - row$Last#
-        return(ret)#
-    }#
-#
-    find.root <- function(row) {#
-        if(bs.res(0,row)*bs.res(upper,row) >= 0)#
-             vol <- NA#
-        else #
-            vol <- uniroot(bs.res, interval = c(0,upper),row=row)$root#
-        return(vol)#
-    }#
-#
-    vols <- vector("numeric",length=nrow(x))#
-    for(i in 1:nrow(x))#
-        vols[i] <- find.root(x[i,])#
-    return(vols)#
-}
-opt <- yahoo.getAllOptions("IBM") ## download data#
-summary(opt)
-opt <- yahoo.getAllOptions("IBM")
-opt <- yahoo.getAllOptions("ABC")
-d = 0.5
-m = 0.1
-d*(1-m)/(1+m*(1-2*d))
-d*(1-m)*100 + (1-d)*m*0 + (1-d)*(1-m)*0.5*0
-45/(0.5&(1+m*(1-2*d)))
-d*(1+m)*100/(1-m*(1-2*d))
-library(Ecdat)
-install.packages("Ecdat")
-library(Ecdat)
-data(CRSPday)
-crsp=CRSPday[,7]
-acf(crsp)
-acf(as.numeric(crsp))
-arima(crsp,order=c(1,0,0))
-arima(crsp,order=c(2,0,0))
-AR1 = arima(crsp,order=c(1,0,0))
-AR2 = arima(crsp,order=c(2,0,0))
-residuals(AR1)
-plot(residuals(AR1))
-plot(AR1)
-qqnorm(AR1)
-qqnorm(residuals(AR1))
-qqline(residuals(AR1))
-qqnorm(residuals(AR2))
-qqline(residuals(AR2))
-resid1 = residuals(AR1)
-acf(resid1)
-resid2 = residuals(AR2)
-qqnorm(resid2)
-qqline(resid2)
-acf(resid1)
-?box,test
-?box.test
-Box.test(resid1, lag = 1, type="Ljung", fitdf=0)
+lseries = tSeries#
+t<-seq(from_date,to_date,length=length(lseries))#
+t2<-t^2#
+plot(lseries, ylab="Value", main="Performing Regression Analysis")#
+lm(lseries ~ t + t2)#
+lines(lm(lseries~t+t2)$fit,col=2,lwd=2)#
+dev.off()
+acf(lseries)
 library(tseries)
-install.packages("tseries")
-library(tseries)
-?adf.test
-adf.test(as.numeric(crsp), alternative="s")
-?auto.arima
-adf.test(as.numeric(crsp), alternative="s")
-auto.arima(AR1)
-library(forecast)
-install.packages("forecast")
-library(forecast)
-auto.arima(crsp)
-MA1 =  = arima(crsp,order=c(0, 0, 1))
-MA2 =  = arima(crsp,order=c(0, 0, 2))
-MA1 = arima(crsp,order=c(0, 0, 1))
-MA2 = arima(crsp,order=c(0, 0, 2))
-MA1
-MA2
-AR1
-AR2
-Box.test(resid2, lag = 1, type="Ljung", fitdf=2)
-Box.test(resid1, lag = 1, type="Ljung", fitdf=1)
-fit = auto.arima(crsp, max.p=0)
-fit
-auto.arima(crsp)
-fit = auto.arima(crsp, max.q=0)
-fit
-Box.test(resid1, lag = 1, type="Ljung", fitdf=1)
-adf.test(as.numeric(crsp), alternative="s")
-Box.test(resid2, lag = 1, type="Ljung", fitdf=2)
-adf.test(as.numeric(crsp), alternative="s")
-Box.test(resid2, lag = 2, type="Ljung", fitdf=2)
-?Box.test
-Box.test(resid2, type="Ljung", fitdf=2)
-Box.test(resid2, lag = 20, type="Ljung", fitdf=2)
-Box.test(resid2, lag = 10, type="Ljung", fitdf=2)
-Box.test(resid2, lag = 5, type="Ljung", fitdf=2)
-Box.test(resid2, lag = 30, type="Ljung", fitdf=2)
-resid1 = residuals(AR1)
-qqnorm(resid1)
-qqline(residuals(AR1))
-qqnorm(resid2)
-qqline(resid2)
-qqnorm(resid2, main = "QQ-Plot for AR(2) Model")
-qqline(resid2)
-qqnorm(resid1, main = "QQ-Plot for AR(1) Model")
-qqline(residuals(AR1))
-acf(resid1, main = "ACF of AR(1) Residuals ")
-acf(resid2, main = "ACF of AR(1) Residuals ")
-?acf
-acf(resid2, lag.max = 30, main = "ACF of AR(1) Residuals ")
-acf(resid2, xlim=c(1,30), main = "ACF of AR(1) Residuals ")
-acf(resid2, xlim=c(1,15), main = "ACF of AR(1) Residuals ")
-acf(resid2, xlim=c(0,15), main = "ACF of AR(1) Residuals ")
-acf(resid2, xlim=c(0,5), main = "ACF of AR(1) Residuals ")
-acf(resid2, xlim=c(0,5), main = "ACF of AR(2) Residuals ")
-acf(resid2, xlim=c(0,2), main = "ACF of AR(2) Residuals ")
-acf(resid1, xlim=c(0,20), main = "ACF of AR(1) Residuals ")
-data(Tbrate,package="Ecdat") library(tseries)# r = the 91-day treasury bill rate # y=thelogofrealGDP# pi = the inflation rate plot(Tbrate)acf(Tbrate)adf.test(Tbrate[,1]) adf.test(Tbrate[,2]) adf.test(Tbrate[,3])
-data(Tbrate,package="Ecdat") # r = the 91-day treasury bill rate # y=thelogofrealGDP# pi = the inflation rate plot(Tbrate)acf(Tbrate)adf.test(Tbrate[,1]) adf.test(Tbrate[,2]) adf.test(Tbrate[,3])
-diff_rate = diff(Tbrate)   adf.test(diff_rate[,1])   adf.test(diff_rate[,2])   adf.test(diff_rate[,3])   pairs(diff_rate)         #  scatterplot matrix   plot(diff_rate)
-library(forecast)   auto.arima(Tbrate[,1],max.P=0,max.Q=0,ic="aic")
-fit1 = arima(Tbrate[,1],order=c(1,0,0))   acf(residuals(fit1))   Box.test(residuals(fit1), lag = 10, type="Ljung")
-acf(resid1, main = "ACF of AR(1) Residuals ")
-acf(resid2, main = "ACF of AR(2) Residuals ")
-acf(AR1)
-ARMAacf(resid2)
-AR1
-plot(0:10, ARMAacf(ar=c(0.0853), lag.max = 10))
-plot(0:10, ARMAacf(ar=c(0.0853), lag.max = 10), type="b")
-plot(0:10, ARMAacf(ar=c(0.0853), lag.max = 10), type="b", pch=16)
-AR2
-acf(crsp)
-plot(0:10, ARMAacf(ar=c(0.0865, -0.0141)), type="b", pch=16)
-plot(0:10, ARMAacf(ar=c(0.0865, -0.0141), lag.max=10), type="b", pch=16)
-plot(0:10, ARMAacf(ar=c(0.0853), lag.max = 10), type="b", pch=16, xlab="Lag")
-acf(crsp, xlim=c(1:10))
-acf(crsp, xlim=10)
-acf(crsp, xlim=c(1,10))
-acf(crsp, xlim=c(0,10))
-plot(0:10, ARMAacf(ar=c(0.0865, -0.0141), lag.max = 10), type="b", pch=16, xlab="Lag", ylab="ACF", main="Fit ACF for AR(2)")
-plot(0:10, ARMAacf(ar=c(0.0853), lag.max = 10), type="b", pch=16, xlab="Lag", ylab="ACF", main="Fit ACF for AR(1)")
-acf(crsp, xlim=c(0,10))
-data(CRSPday)
-crsp=CRSPday[,7]
-acf(crsp, xlim=c(0,10))
-Box.test(resid1, lag = 5, type="Ljung", fitdf=1)
-Box.test(resid1, lag = 10, type="Ljung", fitdf=1)
-Box.test(resid1, lag = 20, type="Ljung", fitdf=1)
-Box.test(resid1, lag = 30, type="Ljung", fitdf=1)
-Box.test(resid2, lag = 30, type="Ljung", fitdf=2)
-Box.test(resid2, lag = 20, type="Ljung", fitdf=2)
-Box.test(resid2, lag = 10, type="Ljung", fitdf=2)
-Box.test(resid2, lag = 5, type="Ljung", fitdf=2)
-acf(as.numeric(crsp))
-AR1 = arima(as.numeric(crsp), order=c(1,0,0))
-AR2 = arima(as.numeric(crsp), order=c(2,0,0))
-resid1 = residuals(AR1)
-qqnorm(resid1, main = "QQ-Plot for AR(1) Model")
-qqline(residuals(AR1))
-acf(resid1, main = "ACF of AR(1) Residuals ")
-resid2 = residuals(AR2)
-qqnorm(resid2, main = "QQ-Plot for AR(2) Model")
-qqline(resid2)
-acf(resid2, main = "ACF of AR(2) Residuals ")
-acf(as.numeric(crsp), xlim=c(0,10))
-adf.test(resid1, alternative="s")
-as.numeric(crsp)
-adf.test(as.numeric(crsp), alternative="s")
-adf.test(resid1, alternative="s")
-AR1
-AR2
-fit = auto.arima(crsp, max.p=0)
-fit = auto.arima(crsp, max.q=0)
-fit
-?auto.arima
-fit = auto.arima(crsp, max.q=0, ic="aicc")
-fit
-auto.arima(crsp, ic="aicc")
-?arima
-MA1 = arima(crsp,order=c(0, 0, 1))
-MA2 = arima(crsp,order=c(0, 0, 2))
-MA1
-MA2
-source('~/Downloads/TASession3_script.R', chdir = TRUE)
-library(forecast)#
+library(RColorBrewer)
+holdfit = auto.arima(log(consumption), d=1, D=1, approx=FALSE, ic="aicc", trace=TRUE)
+holdfit = auto.arima(log(tSeries), d=1, D=1, approx=FALSE, ic="aicc", trace=TRUE)
+summary(holdfit)
+holdfit = auto.arima(log(tSeries), approx=FALSE, ic="aicc", trace=TRUE)
+holdfit = auto.arima(log(tSeries), d = 1, approx=FALSE, ic="aicc", trace=TRUE)
+holdfit
+tsdiag(holdfit)
+horoscope = forecaste(holdfit, h=10)
+horoscope = forecast(holdfit, h=10)
+plot(horoscope)
+to_date
+t
+to_date
+t[:end]
+t[end]
+t[length(t)]
+t[length(t-1)]
+t[length(t)-1]
+t[length(t)] -  t[length(t)-1]
+step = t[length(t)] - t[length(t)-1]
+to_date + step*10
+plot(horoscope, xlim=c(to_date, to_date + step*10))
+plot(horoscope)
+tSeries
+summary(horoscope)
+print(summary(horoscope))
+source("chad.R")
+source("chad.R")
+source("chad.R")
+source("chad.R")
+rm(list = ls())#
+setwd('/Users/Carol/Documents/Android/Chad2/R')#
 #
-## Simulate an ARIMA(0,1,0)#
-arimahold <- arima.sim(model=list(order=c(0,1,0)), n=120)#
-## Look at it#
-plot(arimahold, type="l")#
-## Look at the ACF, does it suggest nonstationarity?#
-acf(arimahold)#
-## Is it stationary?#
-adf.test(arimahold)#
-## Does it have a significant trend?#
-time <- c(1:length(arimahold))#
-summary(glm(arimahold~time))
-arimahold <- arima.sim(model=list(order=c(0,1,0)), n=120)
-library(forecast)
-arimahold <- arima.sim(model=list(order=c(0,1,0)), n=120)
-library(TSA)
-install.packages("TSA")
-update()
-import android, datetime, smtplib, urllib2#
-from email.mime.multipart import MIMEMultipart#
-from email.mime.text import MIMEText
-rm(list = ls())
-setwd('/Users/Carol/Documents/Android/Chad2')
-setwd('/Users/Carol/Documents/Android/Chad2/R')
 library(forecast)#
 library(xts)#
+library(tseries)#
 library(RColorBrewer)#
 #
-filename = "INDPRO.txt"#
+filename = "IC4WSA.txt"#
 #
 findText <-function(data, key){#
 	# data is a list of words, key is the word you are looking for#
@@ -762,7 +309,8 @@ findText <-function(data, key){#
 	}#
 	return(index)#
 }#
-# parse the file#
+# -- [ Parse the data file ] --#
+# =========================#
 text = scan(filename, character(0))#
 line = readLines(filename, 1)#
 title = strsplit(line, "               ")[[1]][2]#
@@ -779,7 +327,7 @@ for (i in seq((index+1), length(text)-1, 2)){#
 data = data.frame(value, row.names=dates)#
 tSeries = xts(data, order.by=dates)#
 #
-# plots 1#
+paste("DATE PROCESSED...")
 png('plot1.png')#
 par(mfrow=c(2,2))#
 plot(tSeries, main = title, ylab="Value")#
@@ -787,36 +335,54 @@ plot(log(tSeries), main = paste("log(", title, ")"), ylab="Value") #
 # can do BoxCox transform here#
 plot(diff(tSeries), main = paste("diff(", title, ")"), ylab="Value")#
 plot(diff(log(tSeries)), main = paste("log(diff(", title,"))"), ylab="Value")#
+dev.off()#
+#
+paste("INITIAL PLOTTING DONE...")#
+# follow this book: http://www.statoek.wiso.uni-goettingen.de/veranstaltungen/zeitrei
+png('plot2.png')#
+par(mfrow=c(2,1))#
+plot(as.numeric(tSeries), type="l", main=paste("Linear Filtering Output of ", title), xlab="", ylab="Value", xaxt="n")#
+abline(v=(seq(0,length(tSeries),60)), col="lightgray", lwd=1, lty=4)#
+abline(h=(seq(0,100,20)), col="lightgray", lwd=1, lty=4)#
+tui.1 <- filter(tSeries,filter=rep(1/5,5))#
+tui.2 <- filter(tSeries,filter=rep(1/25,25))#
+tui.3 <- filter(tSeries,filter=rep(1/81,81))#
+lines(tui.1,col="red")#
+lines(tui.2,col="purple")#
+lines(tui.3,col="blue")
+index = findText(text, "Range:")#
+begin = text[index+1]#
+end = text[index+3]#
+byy = as.numeric(strsplit(begin, "-")[[1]][1])#
+bmm = as.numeric(strsplit(begin, "-")[[1]][2])#
+bdd = as.numeric(strsplit(begin, "-")[[1]][3])#
+eyy = as.numeric(strsplit(end, "-")[[1]][1])#
+emm = as.numeric(strsplit(end, "-")[[1]][2])#
+edd = as.numeric(strsplit(end, "-")[[1]][3])#
+from_date = byy + bmm/10 #
+to_date = eyy + emm/10#
+#
+lseries = log(tSeries)#
+t<-seq(from_date,to_date,length=length(lseries))#
+t2<-t^2#
+plot(lseries, ylab="Value", main="Performing Regression Analysis")#
+regress = lm(lseries ~ t + t2)#
+lines(lm(lseries~t+t2)$fit,col=2,lwd=2)#
 dev.off()
-sink("sink-examp.txt")#
-i <- 1:10#
-outer(i, i, "*")#
-sink()#
-unlink("sink-examp.txt")
-getwd()
-sink("sink-examp.txt")#
-i <- 1:10#
-outer(i, i, "*")#
-sink()#
-unlink("sink-examp.txt")
-sink("sink-examp.txt")
-sink("sink-examp.txt")#
-i <- 1:10#
-outer(i, i, "*")#
-sink()#
-unlink("sink-examp.txt")
-sink("sink-examp.txt")#
-i <- 1:10#
-outer(i, i, "*")#
-sink()
-tSeries
-plot(tSeries)
-class(tSeries)
-unlink()
-sink("sink-examp.txt")#
-i <- 1:10#
-outer(i, i, "*")#
-sink()#
-unlink("sink-examp.txt")
-class(tSeries)
-tSeries
+holdfit = auto.arima(log(tSeries), d = 1, approx=FALSE, ic="aicc", trace=TRUE)
+png('plot3.png')
+tsdiag(holdfit)
+dev.off()
+paste("ARIMA DONE...")
+horoscope = forecast(holdfit, h=10)
+horoscope = forecast(holdfit)
+holdfit = auto.arima(log(as.ts(tSeries)), d = 1, approx=FALSE, ic="aicc", trace=TRUE)
+horoscope = forecast(holdfit)
+source("chad.R")
+cat("Time Series Analysis Output for ", title, "\n")
+source("chad.R")
+as.str(1)
+as.charactor(1)
+as.character(1)
+a = as.character(1)
+a

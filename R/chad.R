@@ -1,4 +1,5 @@
-rm(list = ls())
+args<-commandArgs(TRUE)
+# provide seriesID in the command line 
 setwd('/Users/Carol/Documents/Android/Chad2/R')
 
 library(forecast)
@@ -6,7 +7,8 @@ library(xts)
 library(tseries)
 library(RColorBrewer)
 
-filename = "IC4WSA.txt"
+# filename = "IC4WSA.txt"
+filename = paste0(args, ".txt")
 
 findText <-function(data, key){
 	# data is a list of words, key is the word you are looking for
