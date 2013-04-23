@@ -1,0 +1,60 @@
+<!-- WebView GUI for a Python SL4A (Scripting Layer For Android) script, showing how to 
+     exchange events between HTML/JavaScript & Python on Android. -->
+<html>
+<head>
+    <style>
+        #body {width:100%;}
+        .container {text-align:left;margin:auto;}
+        h1 {text-align:center;margin:auto;}
+        .container div {text-align:left}
+        label {display:block;float:left;width:25%;}
+        .expression {width:75%}
+        .button {text-align:center;margin:auto}
+        .button input {width:30%}
+        .result textarea {width:100%;height:85%}
+        textarea {
+            font-family:"DejaVu Sans Mono","Bitstream Vera Sans Mono","Courier New",monospace;
+        }
+    </style>
+
+<!-- Start of Javascript specific for Android SL4A. The remaining code can be created with generic HTML/Form/CSS editors. -->
+    <script>
+        var droid = new Android();
+        <!-- Function called by the 'Calculate' submit button. -->
+        var calculate = function() {
+            <!-- Expression value text is sent by the event 'calculate' to the Python script. -->
+            droid.eventPost("calculate", document.getElementById("txt_Expression").value);
+            <!-- Wait for the event 'calculation-result' with the calculated result text from the Python script. -->
+            result = droid.eventWaitFor("calculation-result").result;
+            <!-- Removes the event from the buffer. -->
+            droid.eventWait()
+            <!-- Put the calculated result text as the content of the 'txtarea' result. -->
+            document.getElementById("txtarea_Result").innerHTML = result['data'];
+        }
+    </script>
+<!-- End of Javascript specific for Android SL4A. The remaining code can be created with generic HTML/Form/CSS editors. -->
+</head>
+
+<body>
+<title>Python WebView Example</title>
+<div id="body">
+<h1>Python WebView Example</h1>
+
+<!-- The 'Calculate' submit button calls the JavaScript function 'calculate()'. -->
+<form onsubmit="calculate(); return false;">
+<div class="container">
+    <label for="txt_Expression" id="label_Expression">Expression</label>
+	<input value="Example expression, type any text here." id="txt_Expression" name="txt_Expression" class="expression" title="Expression">
+</div>
+<div class="button">
+    <input name="button_Calculate" value="Calculate" type="submit">
+</div>
+<div class="result">
+	<textarea readonly="readonly" id="txtarea_Result" name="txtarea_Result" title="Result">
+    </textarea>
+</div>
+</form>
+</div>
+</body>
+</html>
+
