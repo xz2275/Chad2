@@ -1,10 +1,3 @@
-plot(x=fitted.values(old), y=resid(old), xlab="Fitted Values(Old)", ylab="Residuals(Old)")
-plot(x=fitted.values(local), y=resid(local), xlab="Fitted Values(New)", ylab="Residuals(New)")
-localpred = predict(local,se=T)
-alpha = 0.05
-spread = qnorm(1-alpha/2)*sqrt(localpred$residual.scale^2+localpred$se.fit^2)
-upper = localpred$fit + spread
-lower = localpred$fit - spread
 ind = which(local$x==8)
 lower[ind]
 upper[ind]
@@ -727,17 +720,9 @@ update()
 import android, datetime, smtplib, urllib2#
 from email.mime.multipart import MIMEMultipart#
 from email.mime.text import MIMEText
-install.packages("knitr")
-library(knitr)
-(f = system.file("examples", "knitr-minimal.Rnw", package = "knitr"))
-knit(f)
-f
-class(f)
-library(tools)
-?texi2pdf
-install.packages("Sweave")
-?Sweave
-library(forecast)#
+setwd('/Users/Carol/Documents/Android/Chad2/R')#
+#
+library(forecast)#
 library(xts)#
 library(tseries)#
 library(RColorBrewer)#
@@ -770,355 +755,382 @@ for (i in seq((index+1), length(text)-1, 2)){#
 	dates = append(dates, as.Date(text[i]))#
 }#
 data = data.frame(value, row.names=dates)#
-tSeries = xts(data, order.by=dates)#
-#
-paste("DATE PROCESSED...")#
-#
-# -- [ Data Visualization ] --#
-# =============================#
-#
-png('plot1.png')#
-par(mfrow=c(2,2))#
-plot(tSeries, main = title, ylab="Value")
-library(forecast)#
-library(xts)#
-library(tseries)#
-library(RColorBrewer)#
-#
-filename = "IC4WSA.txt"#
-# filename = paste0(args, ".txt")#
-#
-findText <-function(data, key){#
-	# data is a list of words, key is the word you are looking for#
-	# return the index of the keyword#
-	index = 1#
-	while(data[index] != key){#
-		index = index + 1#
-	}#
-	return(index)#
-}#
-# -- [ Parse the data file ] --#
-# =========================#
-text = scan(filename, character(0))#
-line = readLines(filename, 1)#
-title = strsplit(line, "               ")[[1]][2]#
-#
-index = findText(text, "VALUE")#
-value = c()#
-for (i in seq((index+2), length(text), 2)){#
-	value = append(value, as.numeric(text[i]))#
-}#
-dates = c()#
-for (i in seq((index+1), length(text)-1, 2)){#
-	dates = append(dates, as.Date(text[i]))#
-}#
-data = data.frame(value, row.names=dates)#
-tSeries = xts(data, order.by=dates)#
-#
-paste("DATE PROCESSED...")#
-#
-# -- [ Data Visualization ] --#
-# =============================#
-#
-png('plot1.png')#
-par(mfrow=c(2,2))#
-plot(tSeries, main = title, ylab="Value")
-library(forecast)#
-library(xts)#
-library(tseries)#
-library(RColorBrewer)#
-#
-filename = "IC4WSA.txt"#
-# filename = paste0(args, ".txt")#
-#
-findText <-function(data, key){#
-	# data is a list of words, key is the word you are looking for#
-	# return the index of the keyword#
-	index = 1#
-	while(data[index] != key){#
-		index = index + 1#
-	}#
-	return(index)#
-}
-text = scan(filename, character(0))#
-line = readLines(filename, 1)#
-title = strsplit(line, "               ")[[1]][2]#
-#
-index = findText(text, "VALUE")#
-value = c()#
-for (i in seq((index+2), length(text), 2)){#
-	value = append(value, as.numeric(text[i]))#
-}
-getwd()
-setwd('/Users/Carol/Documents/Android/Chad2/R')
-setwd('/Users/Carol/Documents/Android/Chad2/R')#
-library(forecast)#
-library(xts)#
-library(tseries)#
-library(RColorBrewer)#
-#
-filename = "IC4WSA.txt"#
-# filename = paste0(args, ".txt")#
-#
-findText <-function(data, key){#
-	# data is a list of words, key is the word you are looking for#
-	# return the index of the keyword#
-	index = 1#
-	while(data[index] != key){#
-		index = index + 1#
-	}#
-	return(index)#
-}#
-# -- [ Parse the data file ] --#
-# =========================#
-text = scan(filename, character(0))#
-line = readLines(filename, 1)#
-title = strsplit(line, "               ")[[1]][2]#
-#
-index = findText(text, "VALUE")#
-value = c()#
-for (i in seq((index+2), length(text), 2)){#
-	value = append(value, as.numeric(text[i]))#
-}#
-dates = c()#
-for (i in seq((index+1), length(text)-1, 2)){#
-	dates = append(dates, as.Date(text[i]))#
-}#
-data = data.frame(value, row.names=dates)#
-tSeries = xts(data, order.by=dates)#
-#
-paste("DATE PROCESSED...")#
-#
-# -- [ Data Visualization ] --#
-# =============================#
-#
-png('plot1.png')#
-par(mfrow=c(2,2))#
-plot(tSeries, main = title, ylab="Value")
-Sweave("report.Rnw")
-Sweave("knit-input.Rnw")
-library(knitr)
-knitr("report.Rnw")
-knit("report.Rnw")
-knit("knitr-minimal.Rnw")
-R.home()
-Sweave("report.Rnw")
-Sweave("report.Rnw")
-setwd('/Users/Carol/Documents/Android/Chad2/R')#
-library(forecast)#
-library(xts)#
-library(tseries)#
-library(RColorBrewer)#
-#
-filename = "DEXUSEU.txt"#
-# filename = paste0(args, ".txt")#
-#
-findText <-function(data, key){#
-	# data is a list of words, key is the word you are looking for#
-	# return the index of the keyword#
-	index = 1#
-	while(data[index] != key){#
-		index = index + 1#
-	}#
-	return(index)#
-}#
-# -- [ Parse the data file ] --#
-# =========================#
-text = scan(filename, character(0))#
-line = readLines(filename, 1)#
-title = strsplit(line, "               ")[[1]][2]#
-#
-index = findText(text, "VALUE")#
-value = c()#
-for (i in seq((index+2), length(text), 2)){#
-	value = append(value, as.numeric(text[i]))#
-}#
-dates = c()#
-for (i in seq((index+1), length(text)-1, 2)){#
-	dates = append(dates, as.Date(text[i]))#
-}#
-data = data.frame(value, row.names=dates)#
-tSeries = xts(data, order.by=dates)#
-#
-paste("DATE PROCESSED...")#
-#
-# -- [ Data Visualization ] --#
-# =============================#
-#
-Sweave("report.Rnw")
-setwd('/Users/Carol/Documents/Android/Chad2/R')#
-library(forecast)#
-library(xts)#
-library(tseries)#
-library(RColorBrewer)#
-#
-filename = "DEXUSEU.txt"#
-# filename = paste0(args, ".txt")#
-#
-findText <-function(data, key){#
-	# data is a list of words, key is the word you are looking for#
-	# return the index of the keyword#
-	index = 1#
-	while(data[index] != key){#
-		index = index + 1#
-	}#
-	return(index)#
-}#
-# -- [ Parse the data file ] --#
-# =========================#
-text = scan(filename, character(0))#
-line = readLines(filename, 1)#
-title = strsplit(line, "               ")[[1]][2]#
-#
-index = findText(text, "VALUE")#
-value = c()#
-for (i in seq((index+2), length(text), 2)){#
-	value = append(value, as.numeric(text[i]))#
-}#
-dates = c()#
-for (i in seq((index+1), length(text)-1, 2)){#
-	dates = append(dates, as.Date(text[i]))#
-}#
-data = data.frame(value, row.names=dates)#
-tSeries = xts(data, order.by=dates)#
-#
-paste("DATE PROCESSED...")#
-#
-# -- [ Data Visualization ] --#
-# =============================#
-#
-Sweave("report.Rnw")
-setwd('/Users/Carol/Documents/Android/Chad2/R')#
-library(forecast)#
-library(xts)#
-library(tseries)#
-library(RColorBrewer)#
-#
-filename = "DEXUSEU.txt"#
-# filename = paste0(args, ".txt")#
-#
-findText <-function(data, key){#
-	# data is a list of words, key is the word you are looking for#
-	# return the index of the keyword#
-	index = 1#
-	while(data[index] != key){#
-		index = index + 1#
-	}#
-	return(index)#
-}#
-# -- [ Parse the data file ] --#
-# =========================#
-text = scan(filename, character(0))#
-line = readLines(filename, 1)#
-title = strsplit(line, "               ")[[1]][2]#
-#
-index = findText(text, "VALUE")#
-value = c()#
-for (i in seq((index+2), length(text), 2)){#
-	value = append(value, as.numeric(text[i]))#
-}#
-dates = c()#
-for (i in seq((index+1), length(text)-1, 2)){#
-	dates = append(dates, as.Date(text[i]))#
-}#
-data = data.frame(value, row.names=dates)#
-tSeries = xts(data, order.by=dates)#
-#
-paste("DATE PROCESSED...")#
-#
-# -- [ Data Visualization ] --#
-# =============================#
-#
-Sweave("report.Rnw")
-setwd('/Users/Carol/Documents/Android/Chad2/R')#
-library(forecast)#
-library(xts)#
-library(tseries)#
-library(RColorBrewer)#
-#
-filename = "DEXUSEU.txt"#
-# filename = paste0(args, ".txt")#
-#
-findText <-function(data, key){#
-	# data is a list of words, key is the word you are looking for#
-	# return the index of the keyword#
-	index = 1#
-	while(data[index] != key){#
-		index = index + 1#
-	}#
-	return(index)#
-}#
-# -- [ Parse the data file ] --#
-# =========================#
-text = scan(filename, character(0))#
-line = readLines(filename, 1)#
-title = strsplit(line, "               ")[[1]][2]#
-#
-index = findText(text, "VALUE")#
-value = c()#
-for (i in seq((index+2), length(text), 2)){#
-	value = append(value, as.numeric(text[i]))#
-}#
-dates = c()#
-for (i in seq((index+1), length(text)-1, 2)){#
-	dates = append(dates, as.Date(text[i]))#
-}#
-data = data.frame(value, row.names=dates)#
-tSeries = xts(data, order.by=dates)#
-#
-paste("DATE PROCESSED...")#
-#
-# -- [ Data Visualization ] --#
-# =============================#
-#
-Sweave("report.Rnw")
-?par
-setwd('/Users/Carol/Documents/Android/Chad2/R')#
-library(forecast)#
-library(xts)#
-library(tseries)#
-library(RColorBrewer)#
-#
-filename = "DEXUSEU.txt"#
-# filename = paste0(args, ".txt")#
-#
-findText <-function(data, key){#
-	# data is a list of words, key is the word you are looking for#
-	# return the index of the keyword#
-	index = 1#
-	while(data[index] != key){#
-		index = index + 1#
-	}#
-	return(index)#
-}#
-# -- [ Parse the data file ] --#
-# =========================#
-text = scan(filename, character(0))#
-line = readLines(filename, 1)#
-title = strsplit(line, "               ")[[1]][2]#
-#
-index = findText(text, "VALUE")#
-value = c()#
-for (i in seq((index+2), length(text), 2)){#
-	value = append(value, as.numeric(text[i]))#
-}#
-dates = c()#
-for (i in seq((index+1), length(text)-1, 2)){#
-	dates = append(dates, as.Date(text[i]))#
-}#
-data = data.frame(value, row.names=dates)#
-tSeries = xts(data, order.by=dates)#
-#
-paste("DATE PROCESSED...")#
-#
-# -- [ Data Visualization ] --#
-# =============================#
-#
-Sweave("report.Rnw")
+tSeries = xts(data, order.by=dates)
 par(mfrow=c(2,2))#
 plot(tSeries, main = title, ylab="Value")#
 plot(log(tSeries), main = paste("log(", title, ")"), ylab="Value") #
 # can do BoxCox transform here#
 plot(diff(tSeries), main = paste("diff(", title, ")"), ylab="Value")#
-plot(diff(log(tSeries)), main = paste("log(diff(", title,"))"), ylab="Value"
-)
+plot(diff(log(tSeries)), main = paste("log(diff(", title,"))"), ylab="Value")
+par(mfrow=c(2,2))
+par(mfrow=c(2,2))
+plot(tSeries, main = title, ylab="Value")
+tSeries
+filename = "DESEXEU.txt"
+filename = "DESEXEU.txt"
+findText <-function(data, key){#
+	# data is a list of words, key is the word you are looking for#
+	# return the index of the keyword#
+	index = 1#
+	while(data[index] != key){#
+		index = index + 1#
+	}#
+	return(index)#
+}#
+# -- [ Parse the data file ] --#
+# =========================#
+text = scan(filename, character(0))#
+line = readLines(filename, 1)#
+title = strsplit(line, "               ")[[1]][2]#
+#
+index = findText(text, "VALUE")#
+value = c()#
+for (i in seq((index+2), length(text), 2)){#
+	value = append(value, as.numeric(text[i]))#
+}#
+dates = c()#
+for (i in seq((index+1), length(text)-1, 2)){#
+	dates = append(dates, as.Date(text[i]))#
+}#
+data = data.frame(value, row.names=dates)#
+tSeries = xts(data, order.by=dates)
+filename = "DESUXEU.txt"
+library(forecast)#
+library(xts)#
+library(tseries)#
+library(RColorBrewer)#
+#
+filename = "DESUXEU.txt"#
+# filename = paste0(args, ".txt")#
+#
+findText <-function(data, key){#
+	# data is a list of words, key is the word you are looking for#
+	# return the index of the keyword#
+	index = 1#
+	while(data[index] != key){#
+		index = index + 1#
+	}#
+	return(index)#
+}#
+# -- [ Parse the data file ] --#
+# =========================#
+text = scan(filename, character(0))#
+line = readLines(filename, 1)#
+title = strsplit(line, "               ")[[1]][2]#
+#
+index = findText(text, "VALUE")#
+value = c()#
+for (i in seq((index+2), length(text), 2)){#
+	value = append(value, as.numeric(text[i]))#
+}#
+dates = c()#
+for (i in seq((index+1), length(text)-1, 2)){#
+	dates = append(dates, as.Date(text[i]))#
+}#
+data = data.frame(value, row.names=dates)#
+tSeries = xts(data, order.by=dates)
+library(forecast)#
+library(xts)#
+library(tseries)#
+library(RColorBrewer)#
+#
+filename = "DESUXEU.txt"
+findText <-function(data, key){#
+	# data is a list of words, key is the word you are looking for#
+	# return the index of the keyword#
+	index = 1#
+	while(data[index] != key){#
+		index = index + 1#
+	}#
+	return(index)#
+}
+text = scan(filename, character(0))#
+line = readLines(filename, 1)#
+title = strsplit(line, "               ")[[1]][2]#
+#
+index = findText(text, "VALUE")#
+value = c()#
+for (i in seq((index+2), length(text), 2)){#
+	value = append(value, as.numeric(text[i]))#
+}#
+dates = c()#
+for (i in seq((index+1), length(text)-1, 2)){#
+	dates = append(dates, as.Date(text[i]))#
+}#
+data = data.frame(value, row.names=dates)#
+tSeries = xts(data, order.by=dates)#
+#
+paste("DATE PROCESSED...")
+text = scan(filename, character(0))
+filename = "DESUXEU.txt"
+text = scan(filename, character(0))
+setwd('/Users/Carol/Documents/Android/Chad2/R')#
+library(forecast)#
+library(xts)#
+library(tseries)#
+library(RColorBrewer)#
+#
+filename = "DEXUSEU.txt"#
+# filename = paste0(args, ".txt")#
+#
+findText <-function(data, key){#
+	# data is a list of words, key is the word you are looking for#
+	# return the index of the keyword#
+	index = 1#
+	while(data[index] != key){#
+		index = index + 1#
+	}#
+	return(index)#
+}#
+# -- [ Parse the data file ] --#
+# =========================#
+text = scan(filename, character(0))#
+line = readLines(filename, 1)#
+title = strsplit(line, "               ")[[1]][2]#
+#
+index = findText(text, "VALUE")#
+value = c()#
+for (i in seq((index+2), length(text), 2)){#
+	value = append(value, as.numeric(text[i]))#
+}#
+dates = c()#
+for (i in seq((index+1), length(text)-1, 2)){#
+	dates = append(dates, as.Date(text[i]))#
+}#
+data = data.frame(value, row.names=dates)#
+tSeries = xts(data, order.by=dates)#
+#
+paste("DATE PROCESSED...")#
+#
+# -- [ Data Visualization ] --#
+# =============================#
+#
+Sweave("report.Rnw")
+Sweave("report.Rnw")
+setwd('/Users/Carol/Documents/Android/Chad2/R')#
+library(forecast)#
+library(xts)#
+library(tseries)#
+library(RColorBrewer)#
+#
+filename = "DEXUSEU.txt"#
+# filename = paste0(args, ".txt")#
+#
+findText <-function(data, key){#
+	# data is a list of words, key is the word you are looking for#
+	# return the index of the keyword#
+	index = 1#
+	while(data[index] != key){#
+		index = index + 1#
+	}#
+	return(index)#
+}#
+# -- [ Parse the data file ] --#
+# =========================#
+text = scan(filename, character(0))#
+line = readLines(filename, 1)#
+title = strsplit(line, "               ")[[1]][2]#
+#
+index = findText(text, "VALUE")#
+value = c()#
+for (i in seq((index+2), length(text), 2)){#
+	value = append(value, as.numeric(text[i]))#
+}#
+dates = c()#
+for (i in seq((index+1), length(text)-1, 2)){#
+	dates = append(dates, as.Date(text[i]))#
+}#
+data = data.frame(value, row.names=dates)#
+tSeries = xts(data, order.by=dates)#
+#
+paste("DATE PROCESSED...")#
+#
+# -- [ Data Visualization ] --#
+# =============================#
+#
+Sweave("report.Rnw")
+setwd('/Users/Carol/Documents/Android/Chad2/R')#
+library(forecast)#
+library(xts)#
+library(tseries)#
+library(RColorBrewer)#
+#
+filename = "DEXUSEU.txt"#
+# filename = paste0(args, ".txt")#
+#
+findText <-function(data, key){#
+	# data is a list of words, key is the word you are looking for#
+	# return the index of the keyword#
+	index = 1#
+	while(data[index] != key){#
+		index = index + 1#
+	}#
+	return(index)#
+}#
+# -- [ Parse the data file ] --#
+# =========================#
+text = scan(filename, character(0))#
+line = readLines(filename, 1)#
+title = strsplit(line, "               ")[[1]][2]#
+#
+index = findText(text, "VALUE")#
+value = c()#
+for (i in seq((index+2), length(text), 2)){#
+	value = append(value, as.numeric(text[i]))#
+}#
+dates = c()#
+for (i in seq((index+1), length(text)-1, 2)){#
+	dates = append(dates, as.Date(text[i]))#
+}#
+data = data.frame(value, row.names=dates)#
+tSeries = xts(data, order.by=dates)#
+#
+paste("DATE PROCESSED...")#
+#
+# -- [ Data Visualization ] --#
+# =============================#
+#
+Sweave("report.Rnw")
+setwd('/Users/Carol/Documents/Android/Chad2/R')#
+library(forecast)#
+library(xts)#
+library(tseries)#
+library(RColorBrewer)#
+#
+filename = "DEXUSEU.txt"#
+# filename = paste0(args, ".txt")#
+#
+findText <-function(data, key){#
+	# data is a list of words, key is the word you are looking for#
+	# return the index of the keyword#
+	index = 1#
+	while(data[index] != key){#
+		index = index + 1#
+	}#
+	return(index)#
+}#
+# -- [ Parse the data file ] --#
+# =========================#
+text = scan(filename, character(0))#
+line = readLines(filename, 1)#
+title = strsplit(line, "               ")[[1]][2]#
+#
+index = findText(text, "VALUE")#
+value = c()#
+for (i in seq((index+2), length(text), 2)){#
+	value = append(value, as.numeric(text[i]))#
+}#
+dates = c()#
+for (i in seq((index+1), length(text)-1, 2)){#
+	dates = append(dates, as.Date(text[i]))#
+}#
+data = data.frame(value, row.names=dates)#
+tSeries = xts(data, order.by=dates)#
+#
+paste("DATE PROCESSED...")#
+#
+# -- [ Data Visualization ] --#
+# =============================#
+#
+Sweave("report.Rnw")
+setwd('/Users/Carol/Documents/Android/Chad2/R')#
+library(forecast)#
+library(xts)#
+library(tseries)#
+library(RColorBrewer)#
+#
+filename = "DEXUSEU.txt"#
+# filename = paste0(args, ".txt")#
+#
+findText <-function(data, key){#
+	# data is a list of words, key is the word you are looking for#
+	# return the index of the keyword#
+	index = 1#
+	while(data[index] != key){#
+		index = index + 1#
+	}#
+	return(index)#
+}#
+# -- [ Parse the data file ] --#
+# =========================#
+text = scan(filename, character(0))#
+line = readLines(filename, 1)#
+title = strsplit(line, "               ")[[1]][2]#
+#
+index = findText(text, "VALUE")#
+value = c()#
+for (i in seq((index+2), length(text), 2)){#
+	value = append(value, as.numeric(text[i]))#
+}#
+dates = c()#
+for (i in seq((index+1), length(text)-1, 2)){#
+	dates = append(dates, as.Date(text[i]))#
+}#
+data = data.frame(value, row.names=dates)#
+tSeries = xts(data, order.by=dates)#
+#
+paste("DATE PROCESSED...")#
+#
+# -- [ Data Visualization ] --#
+# =============================#
+#
+Sweave("report.Rnw")
+library(knitr)
+setwd('/Users/Carol/Documents/Android/Chad2/R')#
+library(forecast)#
+library(xts)#
+library(tseries)#
+library(RColorBrewer)#
+#
+filename = "DEXUSEU.txt"#
+# filename = paste0(args, ".txt")#
+#
+findText <-function(data, key){#
+	# data is a list of words, key is the word you are looking for#
+	# return the index of the keyword#
+	index = 1#
+	while(data[index] != key){#
+		index = index + 1#
+	}#
+	return(index)#
+}#
+# -- [ Parse the data file ] --#
+# =========================#
+text = scan(filename, character(0))#
+line = readLines(filename, 1)#
+title = strsplit(line, "               ")[[1]][2]#
+#
+index = findText(text, "VALUE")#
+value = c()#
+for (i in seq((index+2), length(text), 2)){#
+	value = append(value, as.numeric(text[i]))#
+}#
+dates = c()#
+for (i in seq((index+1), length(text)-1, 2)){#
+	dates = append(dates, as.Date(text[i]))#
+}#
+data = data.frame(value, row.names=dates)#
+tSeries = xts(data, order.by=dates)#
+#
+paste("DATE PROCESSED...")#
+#
+# -- [ Data Visualization ] --#
+# =============================#
+#
+Sweave("report.Rnw")
+Sweave("knitr-minimal.Rnw")
+Sweave("knitr-minimal.Rnw")
+Sweave("TEST.Rnw")
+Sweave("test.Rnw")
+Sweave("test.Rnw")
+Sweave("report.Rnw")
+Sweave("report.Rnw")
+Sweave("report.Rnw")
+Sweave("report.Rnw")
+Sweave("knitr-minimal.Rnw")
+Sweave("report.Rnw")
+Sweave("report.Rnw")
+Sweave("test.Rnw")
+Sweave("test.Rnw")
+Sweave("report.Rnw")
+Sweave("report.Rnw")
