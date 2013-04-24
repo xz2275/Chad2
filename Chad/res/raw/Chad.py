@@ -154,16 +154,6 @@ def sendEmail(seriesID):
     server.quit()
     
     # horizontal bar
-    title = 'Be patient'
-    message = 'Your phone needs a while'
-    droid.dialogCreateHorizontalProgress(title, message, 100)
-    droid.dialogShow()
-    for x in range(0, 100):
-        time.sleep(0.03)
-        droid.dialogSetCurrentProgress(x)
-    droid.dialogDismiss()
-        
-    # Tell the user the email has been sent
     horizontal_progress()
 
 # this is a general error message that can be called 
