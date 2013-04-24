@@ -1,6 +1,6 @@
 args<-commandArgs(TRUE)
 # provide seriesID in the command line 
-setwd('/Users/Carol/Documents/Android/Chad2/R')
+setwd('C:/Dropbox/MSCF/Mini 4/Financial Computing III/FC III Course Project WC/workingDir/')
 
 library(forecast)
 library(xts)
@@ -108,7 +108,7 @@ paste("ARIMA DONE...")
 
 # -- [ Forecast ] --
 # ===================
-horoscope = forecast(holdfit)
+horoscope = forecast(holdfit, h=100)
 png('plot3.png')
 plot(horoscope)
 dev.off()
