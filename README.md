@@ -40,7 +40,7 @@ Long Zheng to ask him to have his Outlook open...
 Getting the App through QR code
 ================================
 
-Download the App by scanning or clicking the QR code below:
+Download the App by scanning the barcode below:
 
 ![](http://chart.apis.google.com/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl=https%3A%2F%2Fwww.dropbox.com%2Fs%2F1eh0um62txuf5ie%2FChad.apk)
 
