@@ -16,10 +16,11 @@ At the moment, this App only supports Gmail users.
 Installation Instruction
 ========================
 
-The complete .apk file is not yet available due to a computer specific bug. An alternative 
-solution for now is the following:
+There are two ways to install the .APK file onto your phone, both requre you have an Android phone with internet connection. 
+The easiest way is to acroll down this page and download it through the QR code. 
+If you'd like to be able to write code on your phone in addition to installing the app, here is the instruction:
 
-- Have a mobile device running Android ready
+
 - Download SL4A from the website https://code.google.com/p/android-scripting/ by scanning
   the QR code
 - Install SL4A and open the App
@@ -28,7 +29,7 @@ solution for now is the following:
   will allow you to download the Python Shell.
 - Install Python 2.6.2
 - Now, move Chad.py file to the scripts folder that other sample Python scripts reside in. 
-  For Samsung Galaxy S3, it will be "storage/sdcard/sl4a/scripts"
+  For Samsung Galaxy S3, it will be "storage/sdcard/sl4a/scripts". 
 - Now you are ready to go. Go to the SL4A app, and find the Chad.py script. Click on it, 
   you can choose running it in the command window open or running it in the background.
 - Have fun! 
@@ -39,7 +40,9 @@ Long Zheng to ask him to have his Outlook open...
 Getting the App through QR code
 ================================
 
-http://chart.apis.google.com/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl=https%3A%2F%2Fwww.dropbox.com%2Fs%2F1eh0um62txuf5ie%2FChad.apk
+Download the App by scanning or clicking the QR code below:
+
+![](http://chart.apis.google.com/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl=https%3A%2F%2Fwww.dropbox.com%2Fs%2F1eh0um62txuf5ie%2FChad.apk)
 
 Contact us
 ==========
