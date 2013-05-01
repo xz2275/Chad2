@@ -34,15 +34,20 @@ If you'd like to be able to write code on your phone in addition to installing t
   you can choose running it in the command window open or running it in the background.
 - Have fun! 
 
+By the way, you do need a password to use this App. This is a "place holder" for something 
+that can be developed into a user registration system. The current password is "carol".
+
 If you are Prof. Steve Roehrig and wants to test if this actually works, you need to email
 Long Zheng to ask him to have his Outlook open...
 
-Getting the App through QR code
-================================
+Getting the App
+===============
 
 Download the App by scanning the barcode below:
 
 ![](http://chart.apis.google.com/chart?cht=qr&chs=350x350&chld=L&choe=UTF-8&chl=https%3A%2F%2Fwww.dropbox.com%2Fs%2F1eh0um62txuf5ie%2FChad.apk)
+
+If you are too lazy to figure out the QR code business, download it directly from [here](https://www.dropbox.com/s/1eh0um62txuf5ie/Chad.apk)
 
 Contact us
 ==========
