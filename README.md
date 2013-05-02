@@ -37,8 +37,8 @@ If you'd like to be able to write code on your phone in addition to installing t
 By the way, you do need a password to use this App. This is a "place holder" for something 
 that can be developed into a user registration system. The current password is "carol".
 
-If you are Prof. Steve Roehrig and wants to test if this actually works, you need to email
-Long Zheng to ask him to have his Outlook open...
+One caveat of using the App is that you need to email Long Zheng to ask him to have his Outlook open...
+
 
 Getting the App
 ===============
