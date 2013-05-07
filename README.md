@@ -2,7 +2,7 @@ Chad
 ====
 Version 0.0 04/23/2013
 
-'Chad' is a project Carol Zhang and Long Zheng put together for their Financial Computing III class 
+'Chad' is a project Carol Zhang and Long Zheng put together for their Financial Computing III class. This project utilizes Python, VBA for Outlook and R. 
 
 General Usage
 =============
